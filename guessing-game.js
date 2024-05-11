@@ -13,7 +13,7 @@ const randomInRange = (min, max) => {
     return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled);
 }
 
-let secretNum = randomInRange(0, 100);
+let secretNum;;
 
 
 const checkGuess = num => {
@@ -46,6 +46,14 @@ const askGuess = respond => {
     }
 }
 
-rl.question("Enter a guess: ", askGuess)
+const askRange = min => {
+    rl.question("Enter a max number: ", max => {
+        console.log(`I'm thinking of a number between ${min} & ${max}...`)
+        secretNum = randomInRange (Number(min), Number(max));
+        rl.question("Enter a guess: ", askGuess)
+    })
+}
 
+
+rl.question("Enter a min number: ", askRange)
 // console.log(randomInRange(15, 152));
