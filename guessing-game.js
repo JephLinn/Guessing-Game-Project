@@ -13,7 +13,9 @@ const randomInRange = (min, max) => {
     return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled);
 }
 
-let secretNum;;
+let secretNum;
+
+let numAttempts;
 
 
 const checkGuess = num => {
@@ -36,8 +38,15 @@ const checkGuess = num => {
 const askGuess = respond => {
     let isTrue = checkGuess(Number(respond))
 
+    numAttempts--;
+    
     if (isTrue) {
         console.log(`You win!`);
+        rl.close()
+    }
+
+    else if (numAttempts === 0) {
+        console.log(`You lose!`);
         rl.close()
     }
 
@@ -54,6 +63,10 @@ const askRange = min => {
     })
 }
 
+const askLimit = num => {
+    console.log(`You will have ${num} attempts.`);
+    numAttempts = Number(num);
+    rl.question("Enter a min number: ", askRange)
+}
 
-rl.question("Enter a min number: ", askRange)
-// console.log(randomInRange(15, 152));
+rl.question("How many attempts would you like? ", askLimit);
